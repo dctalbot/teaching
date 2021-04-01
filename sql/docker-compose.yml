@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  db:
+    container_name: pg_container
+    image: postgres:13.2-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_DB: test_db
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4:5.1
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5433:80"
+
+# run these commands:
+# docker-compose up -d
+# docker-compose ps # confirm the containers are running
+# open http://localhost:5433
+
+# follow these steps:
+# log in with PGADMIN_DEFAULT_EMAIL and PGADMIN_DEFAULT_PASSWORD as defined above
+# click add new server
+# Under the General tab, add a Name of your choice
+# Under the Connection tab, specify Host as "db"
+# Click Save
+# in the left treeview you will now see the POSTGRES_DB as defined above
+
+# stop containers:
+# docker-compose stop
+# docker-compose ps # confirm the containers are not running
+
+# clean up (this will delete the containers and thus the database):
+# docker-compose down
+# docker-compose ps # confirm containers are gone
